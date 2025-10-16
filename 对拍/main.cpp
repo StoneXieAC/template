@@ -1,4 +1,4 @@
-// 标准（正确或暴力）解法
+// 待测解法
 #include <bits/stdc++.h>
 
 using ll = long long;
