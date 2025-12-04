@@ -9,24 +9,23 @@ A=i+b/2-1(没有取整,可能是小数)
 取格点的组成图形的面积为一单位。在平行四边形格点，皮克定理依然成立。
 套用于任意三角形格点，皮克定理则是 A=2*i+b-2
 */
+#include<bits/stdc++.h>
 const int N = 110;
 Point p[N];
-
-int gcd(int x, int y) { return y ? gcd(y, x % y) : x; }
-
+ 
 void solve() {
     int n, dx, dy, num = 0, sum = 0;
-    cin >> n;
+    std::cin >> n;
     p[0].x = p[0].y = 0;
     for (int i = 1; i <= n; i++) {
-        cin >> dx >> dy;
+        std::cin >> dx >> dy;
         p[i].x = p[i - 1].x + dx;
         p[i].y = p[i - 1].y + dy;
-        num += gcd(abs(dx), abs(dy));//num为边上的点的数量
-        sum += (p[i - 1] %[i]);//sum为两倍的面积
+        num += std::gcd(std::abs(dx), std::abs(dy));//num为边上的点的数量
+        sum += (p[i - 1] % p[i]);//sum为两倍的面积
         //任意一个多边形的面积等于按顺序求相邻两个点与原点组成的向量的叉积之和的一半
     }
-    sum = abs(sum);
-    cout << (sum - num) / 2 + 1 << " " << num << " " << sum / 2.0 << "\n\n";
+    sum = std::abs(sum);
+    std::cout << (sum - num) / 2 + 1 << " " << num << " " << sum / 2.0 << "\n\n";
     //多边形内的点的数量，分别为边上的点的数量，多边形面积。
 }
