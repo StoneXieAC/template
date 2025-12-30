@@ -2,26 +2,26 @@ template<int MOD>
 struct ModNum {
     int x;
 
-    ModNum() : x(0) {}
+    ModNum() : x(0) {
+    }
 
     template<class T>
     static int norm(T v) {
-        if (0 <= v && v < MOD) return (int) v;
+        if (0 <= v && v < MOD) return static_cast<int>(v);
         v %= MOD;
         if (v < 0) v += MOD;
-        return (int) v;
+        return static_cast<int>(v);
     }
 
     template<class T>
-    ModNum(T v) {
-        x = norm(v);
+    ModNum(T v) : x(norm(v)) {
     }
 
 
-    int val() const { return x; }
+    [[nodiscard]] int val() const { return x; }
 
     template<class T>
-    ModNum pow(T e) const {
+    [[nodiscard]] ModNum pow(T e) const {
         int base = x, res = 1;
         while (e) {
             if (e & 1) res = 1LL * res * base % MOD;
@@ -48,7 +48,7 @@ struct ModNum {
         return ModNum(1LL * x * other.x % MOD);
     }
 
-    ModNum inv() const {
+    [[nodiscard]] ModNum inv() const {
         return pow(MOD - 2);
     }
 
@@ -104,11 +104,11 @@ struct ModNum {
     }
 };
 
-const long long M = 998244353;
+constexpr long long M = 998244353;
 using mint = ModNum<M>;
 
 std::array<std::vector<mint>, 2> getfac(int siz) {
-    std::vector <mint> fac(siz + 1), inv(siz + 1);
+    std::vector<mint> fac(siz + 1), inv(siz + 1);
     fac[0] = inv[0] = 1;
     for (int i = 1; i <= siz; i++) fac[i] = fac[i - 1] * i;
     inv[siz] = mint(1) / fac[siz];
@@ -118,13 +118,13 @@ std::array<std::vector<mint>, 2> getfac(int siz) {
 
 auto [fac, inv] = getfac(1000005);
 
-mint C(int nn, int mm) {
-    if (mm == 0 || nn == mm) return mint(1);
-    if (nn <= 0 || nn < mm) return mint(0);
-    return fac[nn] * inv[mm] * inv[nn - mm];
+
+mint C(int _n, int _m) {
+    if (_m < 0 || _m > _n) return 0;
+    return fac[_n] * inv[_m] * inv[_n - _m];
 }
 
-mint A(int nn, int mm) {
-    if (nn <= 0 || nn < mm) return mint(0);
-    return fac[nn] * inv[nn - mm];
+mint A(int _n, int _m) {
+    if (_m < 0 || _m > _n) return 0;
+    return fac[_n] * inv[_n - _m];
 }
