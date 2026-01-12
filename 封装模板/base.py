@@ -5,11 +5,19 @@ def input():
     return sys.stdin.readline()
 
 
+def gets(t=int):
+    return map(t, input().split())
+
+
+def debug(*args):
+    print(*args, file=sys.stderr)
+
+
 def solve():
     pass
 
-
 if __name__ == "__main__":
+    # _t = 1
     _t = int(input())
     for _ in range(_t):
         solve()
