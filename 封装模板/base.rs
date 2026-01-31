@@ -15,7 +15,6 @@ impl Scanner {
             idx: 0,
         }
     }
-
     fn next<T: std::str::FromStr>(&mut self) -> T {
         while self.idx < self.input.len() && self.input[self.idx].is_ascii_whitespace() {
             self.idx += 1;
@@ -30,15 +29,25 @@ impl Scanner {
             .ok()
             .unwrap()
     }
-
     fn gets<T: std::str::FromStr>(&mut self, n: usize) -> Vec<T> {
         (0..n).map(|_| self.next()).collect()
+    }
+    fn bytes(&mut self) -> Vec<u8> {
+        while self.idx < self.input.len() && self.input[self.idx].is_ascii_whitespace() {
+            self.idx += 1;
+        }
+        let start = self.idx;
+        while self.idx < self.input.len() && !self.input[self.idx].is_ascii_whitespace() {
+            self.idx += 1;
+        }
+        Vec::from(&self.input[start..self.idx])
     }
 }
 fn solve(sc: &mut Scanner, out: &mut impl Write) {}
 
 fn main() {
     let mut sc = Scanner::new();
+    // let t: usize = 1;
     let t: usize = sc.next();
 
     let stdout = io::stdout();
